@@ -19,10 +19,10 @@ import io.swagger.v3.oas.annotations.servers.Server;
 				@Server(url = "/", description = "Default Server URL") })
 @SecuritySchemes({ @SecurityScheme(name = "basicAuth", type = SecuritySchemeType.HTTP, scheme = "basic"),
 		@SecurityScheme(name = "bearerToken", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT") })
-public class EcomApplication {
+public class KrushakSanyogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EcomApplication.class, args);
+		SpringApplication.run(KrushakSanyogApplication.class, args);
 		System.out.println("Application started........................");
 	}
 }
