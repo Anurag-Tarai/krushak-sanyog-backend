@@ -45,7 +45,7 @@ public class Product {
     
     @NotNull(message = "Product description is Mandatory ,can Not Be Null")
   	@NotBlank(message = "Product description is Mandatory")
-    @Size(min=10,max = 50)
+    @Size(min=30,max = 100)
     @Column(name = "description")
     private String description;
 
@@ -56,8 +56,20 @@ public class Product {
     @NotNull(message = "Product category_name is Mandatory ,can Not Be Null")
   	@NotBlank(message = "Product category_name is Mandatory")
     @Column(name = "category_name")
-    private String category; 
-    
+    private String category;
+
+    // google location
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "farmer_id")
+    private Integer farmer_id;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
