@@ -51,12 +51,12 @@ public class User {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-    
+
     @JsonIgnore
     @Column(name = "User_Role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    
+
     @Column(name = "User_Reg_Time")
     private LocalDateTime registerTime;
 
@@ -67,22 +67,22 @@ public class User {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
     private Cart cart;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Orders> orders = new ArrayList<>();;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();;
-    
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Payment> payments = new ArrayList<>();
-    
+
     public void updatePassword(String newPassword, PasswordEncoder passwordEncoder) {
         // Hash the new password before setting it
         String hashedPassword = passwordEncoder.encode(newPassword);

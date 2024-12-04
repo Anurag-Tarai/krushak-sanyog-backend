@@ -1,8 +1,8 @@
 package Ecom.Controller;
 
-import java.util.List;
-
+import Ecom.Repository.CartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Ecom.Model.Cart;
-import Ecom.Model.Product;
 import Ecom.Service.CartService;
 
 @RestController
@@ -24,6 +23,15 @@ import Ecom.Service.CartService;
 public class CartController {
 
     private final CartService cartService;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @GetMapping("/getId/{userId}")
+   public Integer getCartIdByUserId(@PathVariable Integer userId) {
+        Cart cart = cartRepository.findByUser_UserId(userId);
+        return cart != null ? cart.getCartId() : null;
+    }
 
     @PostMapping("/add-product")
     public ResponseEntity<Cart> addProductToCart(@RequestParam Integer userId, @RequestParam Integer productId) {
