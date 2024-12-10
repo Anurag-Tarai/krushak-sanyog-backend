@@ -11,8 +11,8 @@
 	<groupId>com.masai</groupId>
 	<artifactId>Ecom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Ecom</name>
-	<description>Ecomerse Application with Security</description>
+	<name>Farmer</name>
+	<description>Farmer Application with Security</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

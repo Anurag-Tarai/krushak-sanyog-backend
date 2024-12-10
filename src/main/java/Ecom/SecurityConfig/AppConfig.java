@@ -2,6 +2,7 @@ package Ecom.SecurityConfig;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,18 +33,23 @@ public class AppConfig {
 
                             CorsConfiguration cfg = new CorsConfiguration();
 
-                            cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-                            cfg.setAllowedOriginPatterns(Collections.singletonList("https://eccomers96.netlify.app/"));
-                            cfg.setAllowedOriginPatterns(Collections.singletonList("http://localhost:3000"));
-                            cfg.setAllowedMethods(Collections.singletonList("*"));
+                            // Combine all allowed origins into a single call
+                            cfg.setAllowedOriginPatterns(Arrays.asList(
+                                    "*", // Allow all origins (optional if you want it to be open for all)
+                                    "https://eccomers96.netlify.app",
+                                    "http://localhost:3000",
+                                    "http://192.168.1.14:3000", // replace with your phone's IP address
+                                    "http://192.168.1.15:3000"
+                            ));
 
+                            cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                             cfg.setAllowCredentials(true);
-                            cfg.setAllowedHeaders(Collections.singletonList("*"));
+                            cfg.setAllowedHeaders(Arrays.asList("*"));
                             cfg.setExposedHeaders(Arrays.asList("Authorization"));
 
                             return cfg;
-
                         }
+
                     });
                 })
                 .authorizeHttpRequests(auth -> {

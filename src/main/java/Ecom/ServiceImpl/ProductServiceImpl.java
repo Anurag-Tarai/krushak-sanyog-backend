@@ -103,8 +103,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getSingleProduct(Integer productId) {
 
-        Product single = productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
-        return single;
+        return productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
     }
 
 

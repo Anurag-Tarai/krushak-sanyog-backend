@@ -24,7 +24,7 @@ public class    ChatMessageController {
     public ResponseEntity<List<ChatMessage>> getAllMessages(@PathVariable("productId") Integer productId) {
         List<ChatMessage> messages = chatMessageService.getMessagesByProductId(productId);
         if (messages.isEmpty()) {
-            return ResponseEntity.noContent().build();  // 204 No Content if no messages
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // 404 No Content if no messages
         }
         return ResponseEntity.ok(messages);  // 200 OK with the list of messages
     }
