@@ -1,0 +1,14 @@
+package farmerconnect.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
+public class UserDTO {
+
+    @NotBlank(message = "New password can not be Blank..")
+    @NotNull(message = "New password Can not be Null..")
+    private String newPassword;
+
+}
