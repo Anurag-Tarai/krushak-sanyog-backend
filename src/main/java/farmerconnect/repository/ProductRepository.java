@@ -21,6 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAllByNameContainingIgnoreCase(String keyword, Sort sort);
 
+    List<Product> findAllByFarmerId(Integer farmerId);
+
 //	@Query(value = "SELECT p FROM Product p JOIN Category c ON p.category_id = c.category_id WHERE c.name = :cat", nativeQuery = true)
 //	public List<Product> getProductCategoryName(@Param("cat") String category);
 

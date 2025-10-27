@@ -19,7 +19,6 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
 
-
     @Override
     public Address addAddressToUser(Integer userId, Address address) throws AddressException {
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User Not Fouund"));

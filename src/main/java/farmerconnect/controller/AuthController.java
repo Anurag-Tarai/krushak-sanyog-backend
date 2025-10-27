@@ -5,6 +5,7 @@ import farmerconnect.dto.AuthResponse;
 import farmerconnect.dto.UserRegisterDTO;
 import farmerconnect.enums.UserAccountStatus;
 import farmerconnect.enums.UserRole;
+import farmerconnect.exception.InvalidCredentialException;
 import farmerconnect.model.User;
 import farmerconnect.repository.UserRepository;
 import farmerconnect.security.JwtService;
@@ -73,7 +74,7 @@ public class AuthController {
 
         // 1️⃣ Find user
         User user = userRepository.findByEmail(authRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+                .orElseThrow(() -> new InvalidCredentialException("Invalid email or password"));
 
         // 2️⃣ Check password
         if (!passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {

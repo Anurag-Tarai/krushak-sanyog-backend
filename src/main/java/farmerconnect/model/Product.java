@@ -35,7 +35,7 @@ public class Product {
 
     @ElementCollection
     @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "image_url")
+    @Column(name = "image_url", length = 2048) // ✅ Increase URL size limit
     private List<String> imageUrls = new ArrayList<>();
 
     private boolean isAvailable = true;

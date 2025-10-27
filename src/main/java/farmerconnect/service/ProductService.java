@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import farmerconnect.exception.ProductException;
+import farmerconnect.exception.ProductNotFoundException;
 import farmerconnect.model.Product;
 import farmerconnect.dto.ProductDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,18 +13,21 @@ public interface ProductService {
 
     Product addProduct(ProductDTO dto, MultipartFile[] images) throws IOException;
 
-    public Product updateProduct(Integer productId, ProductDTO product)throws ProductException;
-	
-	public List<Product> getProductByName(String name)throws ProductException;
-	
-	public List<Product> getAllProduct(String keyword, String sortDirection, String sortBy)throws ProductException;
-	
-	public List<Product> getProductByCategory(String catagory) throws ProductException;
-	
-	public void removeProduct(Integer productId)throws ProductException;
+    Product uploadMoreImages(Integer productId, MultipartFile[] images) throws IOException;
+    Product deleteSingleImage(Integer productId, String imageUrl);
 
-	public Product getSingleProduct(Integer productId);
+    Product updateProduct(Integer productId, ProductDTO product);
 
-    Product updateProductPrice(Integer productId, Double newPrice);
+	List<Product> getAllProduct(String keyword, String sortDirection, String sortBy);
+	
+	List<Product> getProductByCategory(String category);
+	
+	void removeProduct(Integer productId);
+
+	Product getProductById(Integer productId);
+
+    Product updateProductQuantity(Integer productId, Double quantity);
+
+    List<Product> getByFarmerId(Integer farmerId);
 }
  
