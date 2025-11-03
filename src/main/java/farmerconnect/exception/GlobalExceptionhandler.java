@@ -88,7 +88,7 @@ public class GlobalExceptionhandler {
 
 		MyErrorClass e1 = new MyErrorClass();
 		e1.setMessage(e.getMessage());
-		System.out.println("inside the global orderexception");
+		System.out.println("inside the global order exception");
 		e1.setLocalDateTimes(LocalDateTime.now());
 		e1.setDesc(req.getDescription(false));
 
@@ -107,41 +107,10 @@ public class GlobalExceptionhandler {
 		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(CartException.class)
-	public ResponseEntity<MyErrorClass> getException(CartException e, WebRequest req) {
 
-		MyErrorClass e1 = new MyErrorClass();
-		e1.setMessage(e.getMessage());
-		e1.setLocalDateTimes(LocalDateTime.now());
-		e1.setDesc(req.getDescription(false));
 
-		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.BAD_GATEWAY);
 
-	}
 
-	@ExceptionHandler(OrdersException.class)
-	public ResponseEntity<MyErrorClass> getException(OrdersException e, WebRequest req) {
-
-		MyErrorClass e1 = new MyErrorClass();
-		e1.setMessage(e.getMessage());
-		e1.setLocalDateTimes(LocalDateTime.now());
-		e1.setDesc(req.getDescription(false));
-
-		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.BAD_GATEWAY);
-
-	}
-
-	@ExceptionHandler(PaymentException.class)
-	public ResponseEntity<MyErrorClass> getException(PaymentException e, WebRequest req) {
-
-		MyErrorClass e1 = new MyErrorClass();
-		e1.setMessage(e.getMessage());
-		e1.setLocalDateTimes(LocalDateTime.now());
-		e1.setDesc(req.getDescription(false));
-
-		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.BAD_GATEWAY);
-
-	}
 
 	@ExceptionHandler(ReviewException.class)
 	public ResponseEntity<MyErrorClass> getException(ReviewException e, WebRequest req) {
@@ -155,29 +124,8 @@ public class GlobalExceptionhandler {
 
 	}
 
-	@ExceptionHandler(ShippingException.class)
-	public ResponseEntity<MyErrorClass> getException(ShippingException e, WebRequest req) {
 
-		MyErrorClass e1 = new MyErrorClass();
-		e1.setMessage(e.getMessage());
-		e1.setLocalDateTimes(LocalDateTime.now());
-		e1.setDesc(req.getDescription(false));
 
-		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.BAD_GATEWAY);
-
-	}
-
-	@ExceptionHandler(ShipperException.class)
-	public ResponseEntity<MyErrorClass> getException(ShipperException e, WebRequest req) {
-
-		MyErrorClass e1 = new MyErrorClass();
-		e1.setMessage(e.getMessage());
-		e1.setLocalDateTimes(LocalDateTime.now());
-		e1.setDesc(req.getDescription(false));
-
-		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.BAD_GATEWAY);
-
-	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<MyErrorClass> getException(Exception e, WebRequest req) {

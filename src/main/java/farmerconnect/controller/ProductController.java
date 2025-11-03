@@ -1,6 +1,7 @@
 package farmerconnect.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.validation.constraints.Positive;
@@ -36,6 +37,18 @@ public class ProductController {
     ) throws IOException {
         Product product = productService.addProduct(productDTO, images);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value="/bulk" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<List<Product>> addProductBulk(
+            @RequestPart("products") List<ProductDTO> productDTOs,
+            @RequestPart("images") MultipartFile[] images
+    ) throws IOException {
+        List<Product> products = new ArrayList<>();
+        for(ProductDTO p : productDTOs){
+            products.add(productService.addProduct(p, images));
+        }
+        return new ResponseEntity<>(products, HttpStatus.CREATED);
     }
 
     @GetMapping("/farmer/{farmerId}")

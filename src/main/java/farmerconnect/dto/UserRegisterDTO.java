@@ -15,5 +15,5 @@ public class UserRegisterDTO {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private UserRole role;  // ROLE_USER or ROLE_FARMER
+    private UserRole role;  // ROLE_BUYER or ROLE_FARMER
 }

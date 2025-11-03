@@ -2,8 +2,7 @@ package farmerconnect.enums;
 
 public enum UserRole {
 	ROLE_ADMIN,
-	ROLE_USER,
+    ROLE_BUYER,
     ROLE_FARMER,
 	UNKNOWN;
-
 }

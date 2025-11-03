@@ -9,12 +9,10 @@ import farmerconnect.exception.InvalidCredentialException;
 import farmerconnect.model.User;
 import farmerconnect.repository.UserRepository;
 import farmerconnect.security.JwtService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +43,7 @@ public class AuthController {
 
         // 2️⃣ Validate role type (only FARMER or USER)
         if (dto.getRole() == null ||
-                (!dto.getRole().equals(UserRole.ROLE_FARMER) && !dto.getRole().equals(UserRole.ROLE_USER))) {
+                (!dto.getRole().equals(UserRole.ROLE_FARMER) && !dto.getRole().equals(UserRole.ROLE_BUYER))) {
             return ResponseEntity.badRequest().body("Invalid role type");
         }
 

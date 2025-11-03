@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/ecom/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/get-user/{id}")
+    @GetMapping("{id}")
     public Optional<User> getUserById(@PathVariable Integer id){
         return userRepository.findById(id);
     }

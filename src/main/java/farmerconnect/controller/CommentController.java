@@ -75,11 +75,11 @@ public class CommentController {
 
 
 
-    // ✅ Fetch all comments made by buyers (ROLE_USER) across all products
+    // ✅ Fetch all comments made by buyers (ROLE_BUYER) across all products
     @GetMapping("/buyer")
     public List<Comment> getAllCommentsByBuyers() {
         return commentRepository.findAll().stream()
-                .filter(comment -> comment.getUser().getRole().name().equals("ROLE_USER"))
+                .filter(comment -> comment.getUser().getRole().name().equals("ROLE_BUYER"))
                 .toList();
     }
 
@@ -95,7 +95,7 @@ public class CommentController {
         }
 
         User user = userOpt.get();
-        if (user.getRole().name().equals("ROLE_USER")) {
+        if (user.getRole().name().equals("ROLE_BUYER")) {
             // Buyer sees all comments
             return commentRepository.findByProduct_ProductId(productId);
         } else {

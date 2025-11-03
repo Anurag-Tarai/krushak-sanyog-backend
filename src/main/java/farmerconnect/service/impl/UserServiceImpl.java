@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import farmerconnect.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +34,13 @@ public class UserServiceImpl implements UserService {
 		this.userRepository = userRepository;
 	}
 
-	@Override
+    @Override
+    public CustomUserDetails getCurrentAuthUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (CustomUserDetails) authentication.getPrincipal();
+    }
+
+    @Override
 	public User getUserByEmailId(String emailId) throws UserException {
 		return userRepository.findByEmail(emailId).orElseThrow(() -> new UserException("User not found"));
 
@@ -53,7 +62,7 @@ public class UserServiceImpl implements UserService {
 		newCustomer.setFirstName(customer.getFirstName());
 		newCustomer.setLastName(customer.getLastName());
 		newCustomer.setPhoneNumber(customer.getPhoneNumber());
-		newCustomer.setRole(UserRole.ROLE_USER);
+		newCustomer.setRole(UserRole.ROLE_BUYER);
 		newCustomer.setRegisterTime(LocalDateTime.now());
 		newCustomer.setUserAccountStatus(UserAccountStatus.ACTIVE);
 
@@ -103,9 +112,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserDetails(Integer userId) throws UserException {
-		User existingUser = userRepository.findById(userId).orElseThrow(() -> new UserException("User not found"));
-		return existingUser;
+	public User getUserById(Integer userId) throws UserException {
+        return userRepository.findById(userId).orElseThrow(() -> new UserException("User not found"));
 	}
 
 	@Override
@@ -113,7 +121,7 @@ public class UserServiceImpl implements UserService {
 
 		List<User> existingAllUser = userRepository.findAll();
 		if (existingAllUser.isEmpty()) {
-			new UserException("User list is Empty");
+            throw new UserException("User list is Empty");
 		}
 		return existingAllUser;
 	}

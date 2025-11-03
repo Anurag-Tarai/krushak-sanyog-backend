@@ -94,7 +94,6 @@ public class ProductServiceImpl implements ProductService {
                 existingImages.add(imageUrl);
             }
         }
-
         product.setImageUrls(existingImages);
         return productRepository.save(product);
     }
