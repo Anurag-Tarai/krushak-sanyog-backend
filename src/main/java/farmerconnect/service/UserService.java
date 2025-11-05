@@ -16,8 +16,8 @@ import farmerconnect.dto.UserDTO;
 
 @Service
 public interface UserService {
-	
-	
+
+
 	public CustomUserDetails getCurrentAuthUser();
 
 	public User getUserByEmailId(String emailId)throws UserException;

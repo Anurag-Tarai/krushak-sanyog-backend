@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import farmerconnect.security.CustomUserDetails;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,11 +52,9 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.CREATED);
     }
 
-    @GetMapping("/farmer/{farmerId}")
-    public ResponseEntity<?> getProductsByFarmerId(@PathVariable @Positive Integer farmerId) {
-        log.info("Fetching products for farmerId: {}", farmerId);
-
-        List<Product> products = productService.getByFarmerId(farmerId);
+    @GetMapping("/farmer")
+    public ResponseEntity<?> getProductsByFarmerId() {
+        List<Product> products = productService.getByFarmerId();
 
         return products.isEmpty()
                 ? ResponseEntity.noContent().build()

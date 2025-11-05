@@ -16,6 +16,18 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class GlobalExceptionhandler {
 
+
+
+    @ExceptionHandler(ProductAlreadyInWishlistException.class)
+    public ResponseEntity<Map<String, Object>> handleProductAlreadyInWishlistException(ProductAlreadyInWishlistException ex) {
+        Map<String, Object> body = Map.of(
+                "message", ex.getMessage(),
+                "timestamp", LocalDateTime.now()
+        );
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(ProductNotFoundException ex) {
         Map<String, Object> body = Map.of(

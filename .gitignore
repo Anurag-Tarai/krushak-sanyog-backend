@@ -21,6 +21,7 @@ target/
 
 # Environment variables
 .env
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

@@ -7,6 +7,7 @@ import farmerconnect.exception.*;
 import farmerconnect.model.User;
 import farmerconnect.security.CustomUserDetails;
 import farmerconnect.service.S3Service;
+import farmerconnect.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final S3Service s3Service;
+    private final UserService userService;
 
     @Override
     public Product addProduct(ProductDTO dto, MultipartFile[] images) throws IOException {
@@ -211,12 +213,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getByFarmerId(Integer farmerId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Integer id = userDetails.getUserId();
-        if(!Objects.equals(id, farmerId))
-            throw new ResourceNotFoundException("Invalid Id, enter correct Id: " + farmerId);
-        return productRepository.findAllByFarmerId(farmerId);
+    public List<Product> getByFarmerId() {
+        CustomUserDetails authUserDetails = userService.getCurrentAuthUser();
+        Integer userId = authUserDetails.getUserId();
+        if(!authUserDetails.getRole().equals("ROLE_FARMER"))
+            throw new InvalidCredentialException("You are not farmer");
+        return productRepository.findAllByFarmerId(userId);
     }
 }

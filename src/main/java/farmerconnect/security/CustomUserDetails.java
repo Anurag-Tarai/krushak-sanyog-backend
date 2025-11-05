@@ -27,5 +27,11 @@ public class CustomUserDetails implements UserDetails {
             && user.getUserAccountStatus().name().equalsIgnoreCase("ACTIVE"); }
 
     // convenience
-    public Integer getUserId() { return user.getUserId(); }
+    public Integer getUserId() { return user.getUserId();
+
+    }
+
+    public String getRole() {
+        return String.valueOf(user.getRole());
+    }
 }

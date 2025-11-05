@@ -28,6 +28,6 @@ public interface ProductService {
 
     Product updateProductQuantity(Integer productId, Double quantity);
 
-    List<Product> getByFarmerId(Integer farmerId);
+    List<Product> getByFarmerId();
 }
  

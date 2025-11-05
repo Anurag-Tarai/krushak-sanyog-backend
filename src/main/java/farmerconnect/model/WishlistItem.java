@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "wishlist_items")
-public class WishListItem {
+public class WishlistItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class WishListItem {
     @ManyToOne
     @JoinColumn(name = "wishlist_id")
     @JsonIgnore
-    private WishList wishlist;
+    private Wishlist wishlist;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

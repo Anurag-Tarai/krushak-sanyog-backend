@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "wishlist")
-public class WishList {
+public class Wishlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wishlist_id")
@@ -22,6 +22,6 @@ public class WishList {
     private User user;
 
     @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WishListItem> items = new ArrayList<>();
+    private List<WishlistItem> items = new ArrayList<>();
 }
 
