@@ -1,36 +1,25 @@
-HELP.md
+# Maven / Java
 target/
+*.class
+*.log
+*.jar
+
+# Maven wrapper (keep jar)
+.mvn/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+mvnw
+mvnw.cmd
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+# IDE / editors
+.idea/
 *.iml
-*.ipr
+.vscode/
 
-# Environment variables
+# Environment
 .env
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# OS
+.DS_Store
 
-### VS Code ###
-.vscode/
+# Frontend / Node (remove if accidentally added)
+package-lock.json
