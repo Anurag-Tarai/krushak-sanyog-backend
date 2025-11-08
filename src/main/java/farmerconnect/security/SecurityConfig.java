@@ -51,13 +51,16 @@ public class SecurityConfig {
         // CORS config
         http.cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration cfg = new CorsConfiguration();
-            cfg.setAllowedOrigins(List.of("http://localhost:3000",
-                    "https://krushak-sanyog-frontend-2oe82i9tw-anuragdev051-8879s-projects.vercel.app")); // exact frontend origin
+            cfg.setAllowedOrigins(List.of(
+                    "http://localhost:3000",                   // local dev
+                    "https://farmer-connect-web.vercel.app/"      // production
+            ));
             cfg.setAllowedMethods(List.of("GET","PATCH","POST","PUT","DELETE","OPTIONS"));
             cfg.setAllowedHeaders(List.of("*"));
-            cfg.setAllowCredentials(true); // ✅ very important
+            cfg.setAllowCredentials(true);
             return cfg;
         }));
+
 
         http
                 .csrf(csrf -> csrf.disable())
