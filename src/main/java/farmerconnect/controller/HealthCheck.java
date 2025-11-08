@@ -8,6 +8,6 @@ public class HealthCheck {
 
     @GetMapping("/health-check")
     public String healthCheck(){
-        return "ok";
+        return "FARMER CONNECT SERVER IS UP/LIVE";
     }
 }
