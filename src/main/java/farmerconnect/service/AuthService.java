@@ -9,24 +9,19 @@ import farmerconnect.exception.InvalidCredentialException;
 import farmerconnect.model.User;
 import farmerconnect.repository.UserRepository;
 import farmerconnect.security.JwtService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +31,8 @@ public class AuthService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    boolean isProd = Boolean.parseBoolean(System.getenv("APP_ENV_PROD"));
 
     // ---------------- REGISTER ----------------
     public ResponseEntity<?> register(UserRegisterDTO dto) {
@@ -96,10 +93,10 @@ public class AuthService {
         // 5. set HttpOnly cookie
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
-                .secure(Boolean.parseBoolean(System.getProperty("app.cookie.secure", "false"))) // switch in prod
+                .secure(isProd) // switch in prod
                 .path("/")
                 .maxAge(Duration.ofDays(1))
-                .sameSite("Lax") // consider SameSite=None for cross-site + secure=true
+                .sameSite(isProd ? "None" : "Lax") // consider SameSite=None for cross-site + secure=true
                 .build();
         response.addHeader("Set-Cookie", jwtCookie.toString());
 
@@ -117,19 +114,19 @@ public class AuthService {
     public ResponseEntity<?> logout(HttpServletResponse response) {
         ResponseCookie clearJwt = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false)
+                .secure(isProd)
                 .path("/")
                 .maxAge(0)
-                .sameSite("Lax")
+                .sameSite(isProd ? "None" : "Lax")
                 .build();
         response.addHeader("Set-Cookie", clearJwt.toString());
 
         ResponseCookie clearXsrf = ResponseCookie.from("XSRF-TOKEN", "")
                 .httpOnly(false)
-                .secure(false)
+                .secure(isProd)
                 .path("/")
                 .maxAge(0)
-                .sameSite("Lax")
+                .sameSite(isProd ? "None" : "Lax")
                 .build();
         response.addHeader("Set-Cookie", clearXsrf.toString());
 

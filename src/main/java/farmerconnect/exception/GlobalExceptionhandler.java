@@ -122,23 +122,6 @@ public class GlobalExceptionhandler {
 
 
 
-
-
-	@ExceptionHandler(ReviewException.class)
-	public ResponseEntity<MyErrorClass> getException(ReviewException e, WebRequest req) {
-
-		MyErrorClass e1 = new MyErrorClass();
-		e1.setMessage(e.getMessage());
-		e1.setLocalDateTimes(LocalDateTime.now());
-		e1.setDesc(req.getDescription(false));
-
-		return new ResponseEntity<MyErrorClass>(e1, HttpStatus.BAD_GATEWAY);
-
-	}
-
-
-
-
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<MyErrorClass> getException(Exception e, WebRequest req) {
 
