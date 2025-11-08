@@ -1,13 +1,28 @@
-# Use a working JDK 17 image
-FROM eclipse-temurin:17-jdk
+# ---------- Stage 1: Build ----------
+FROM maven:3.9.1-eclipse-temurin-17 AS build
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy your Spring Boot jar into the container
-COPY target/farmerconnect-0.0.1-SNAPSHOT.jar app.jar
+# Copy pom.xml and download dependencies first (caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Expose the port your app uses
+# Copy all source code
+COPY src ./src
+
+# Package the application (skip tests if needed)
+RUN mvn package -DskipTests
+
+# ---------- Stage 2: Runtime ----------
+FROM eclipse-temurin:17-jdk
+
+WORKDIR /app
+
+# Copy the built jar from the previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose port (8443 in your current Dockerfile)
 EXPOSE 8443
 
 # Run the Spring Boot app
