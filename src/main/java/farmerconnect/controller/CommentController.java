@@ -6,6 +6,7 @@ import farmerconnect.model.Product;
 import farmerconnect.model.User;
 import farmerconnect.dto.CommentRequest;
 import farmerconnect.dto.CommentResponseDTO;
+import farmerconnect.exception.ResourceNotFoundException;
 import farmerconnect.repository.CommentRepository;
 import farmerconnect.repository.ProductRepository;
 import farmerconnect.repository.UserRepository;
@@ -29,16 +30,14 @@ public class CommentController {
     // ✅ Create a new comment
     @PostMapping("/add")
     public Comment createComment(@RequestBody CommentRequest commentRequest) {
-        Optional<User> userOpt = userRepository.findById(commentRequest.getUserId());
-        Optional<Product> productOpt = productRepository.findById(commentRequest.getProductId());
-
-        if (userOpt.isEmpty() || productOpt.isEmpty()) {
-            throw new RuntimeException("User or Product not found");
-        }
+        User user = userRepository.findById(commentRequest.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Product product = productRepository.findById(commentRequest.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         Comment comment = new Comment();
-        comment.setUser(userOpt.get());
-        comment.setProduct(productOpt.get());
+        comment.setUser(user);
+        comment.setProduct(product);
         comment.setContent(commentRequest.getContent());
         comment.setTimestamp(LocalDateTime.now());
 
@@ -47,27 +46,21 @@ public class CommentController {
     }
 
     // ✅ Fetch all comments for a specific product (buyer view)
-    // ✅ Fetch all comments for a specific product (buyer view)
     @GetMapping("/product/{productId}")
     public List<CommentResponseDTO> getAllCommentsByProduct(@PathVariable Integer productId) {
         List<Comment> comments = commentRepository.findByProduct_ProductId(productId);
 
         return comments.stream()
                 .map(comment -> {
-                    Integer userId = comment.getUser().getUserId();
-                    String username = comment.getUser().getUsername(); // Get the username
-                    String role = String.valueOf(userRepository.findById(userId)
-                            .map(User::getRole)
-                            .orElse(UserRole.valueOf("UNKNOWN")));
-
+                    User user = comment.getUser();
                     return new CommentResponseDTO(
                             comment.getCommentId(),
                             comment.getContent(),
                             comment.getTimestamp(),
-                            userId,
+                            user.getUserId(),
                             comment.getProduct().getProductId(),
-                            role,
-                            username // Pass the username to the DTO
+                            user.getRole().name(),
+                            user.getUsername()
                     );
                 })
                 .collect(Collectors.toList());
@@ -79,23 +72,19 @@ public class CommentController {
     @GetMapping("/buyer")
     public List<Comment> getAllCommentsByBuyers() {
         return commentRepository.findAll().stream()
-                .filter(comment -> comment.getUser().getRole().name().equals("ROLE_BUYER"))
+                .filter(comment -> comment.getUser().getRole() == UserRole.ROLE_BUYER)
                 .toList();
     }
 
 
     // ✅ Fetch farmer's own comments for a product
-    @GetMapping("/product/{productId}/user/{userId}")
+    @GetMapping("/user/{userId}/product/{productId}")
     public List<Comment> getFarmerComments(@PathVariable Integer productId,
                                            @PathVariable Integer userId) {
-        Optional<User> userOpt = userRepository.findById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (userOpt.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
-
-        User user = userOpt.get();
-        if (user.getRole().name().equals("ROLE_BUYER")) {
+        if (user.getRole() == UserRole.ROLE_BUYER) {
             // Buyer sees all comments
             return commentRepository.findByProduct_ProductId(productId);
         } else {

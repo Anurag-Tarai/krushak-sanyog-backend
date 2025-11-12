@@ -98,11 +98,11 @@ public class ProductController {
     }
 
     /**
-     * Update only product price
-     * PATCH /api/v1/products/{productId}/price
+     * Update only product quantity
+     * PATCH /api/v1/products/{productId}/quantity
      */
     @PatchMapping("/{productId}/quantity")
-    public ResponseEntity<Product> updateProductPrice(
+    public ResponseEntity<Product> updateProductQuantity(
             @PathVariable Integer productId,
             @RequestParam Double quantity) {
         Product updatedProduct = productService.updateProductQuantity(productId, quantity);

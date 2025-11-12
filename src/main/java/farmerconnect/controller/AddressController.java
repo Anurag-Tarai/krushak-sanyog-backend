@@ -25,7 +25,7 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @PostMapping("/{userId}")
+    @PostMapping("/add/{userId}")
     public ResponseEntity<Address> addAddressToUser(
             @PathVariable Integer userId, @Valid @RequestBody Address address) {
         Address addedAddress = addressService.addAddressToUser(userId, address);

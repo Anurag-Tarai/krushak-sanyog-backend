@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
 
+
 @EntityScan(basePackages = "farmerconnect")
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "REST API", version = "1.1"), security = {
@@ -20,7 +21,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @SecuritySchemes({ @SecurityScheme(name = "basicAuth", type = SecuritySchemeType.HTTP, scheme = "basic"),
 		@SecurityScheme(name = "bearerToken", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT") })
 public class KrushakSanyogApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(KrushakSanyogApplication.class, args);
 		System.out.println("Application started........................");

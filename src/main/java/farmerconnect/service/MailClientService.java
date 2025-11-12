@@ -13,7 +13,7 @@ public class MailClientService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${mail.service.base.url:http://ec2-43-205-243-164.ap-south-1.compute.amazonaws.com:8080}")
+    @Value("${mail.service.base.url:ec2-13-233-2-169.ap-south-1.compute.amazonaws.com:8080}")
     private String mailServiceBaseUrl;
 
     public MailClientService(RestTemplate restTemplate) {
