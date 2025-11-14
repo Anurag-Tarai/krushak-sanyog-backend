@@ -68,12 +68,17 @@ public class SecurityConfig {
 
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api/v1/auth/**","/health-check", "api/v1/mail/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/products").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/v1/wishlist/**").hasRole("BUYER")
                         .anyRequest().authenticated()
                 )
