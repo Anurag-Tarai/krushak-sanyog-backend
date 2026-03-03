@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    ports:
+      - "8181:8181"
+    environment:
+      - RDS_ENDPOINT=${RDS_ENDPOINT}
+      - RDS_USERNAME=${RDS_USERNAME}
+      - RDS_PASSWORD=${RDS_PASSWORD}
+      - BUCKET_NAME=${BUCKET_NAME}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION_MS=${JWT_EXPIRATION_MS}

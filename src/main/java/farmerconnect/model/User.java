@@ -67,7 +67,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
 
     public void updatePassword(String newPassword, PasswordEncoder passwordEncoder) {

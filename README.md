@@ -60,10 +60,58 @@ Maven: Maven wrapper + recommended local installation
 
 ---
 
-## 4. Backend Architecture
+## 4. Running the Application
 
-> Diagram Placeholder
+### Using Docker Compose
 
+**Requirements**
+- Docker
+- Docker Compose
+
+**Steps**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/anurag-tarai/krushak-sanyog-backend
+   ```
+
+2. Create a `.env` file in the root of the project and add the following environment variables:
+   ```
+   RDS_ENDPOINT=<your_rds_endpoint>
+   RDS_USERNAME=<your_rds_username>
+   RDS_PASSWORD=<your_rds_password>
+   BUCKET_NAME=<your_s3_bucket_name>
+   AWS_REGION=<your_aws_region>
+   AWS_ACCESS_KEY_ID=<your_aws_access_key_id>
+   AWS_SECRET_ACCESS_KEY=<your_aws_secret_access_key>
+   JWT_SECRET=<your_jwt_secret>
+   JWT_EXPIRATION_MS=<your_jwt_expiration_ms>
+   ```
+
+3. Run the application:
+   ```bash
+   docker-compose up --build
+   ```
+
+### Running locally without Docker
+
+**Requirements**
+- Java 17+
+- Maven 3+
+- MySQL local or AWS RDS
+- AWS S3 Bucket
+
+**Steps**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/anurag-tarai/krushak-sanyog-backend
+   ```
+
+2. Configure environment variables in your IDE or system.
+
+3. Run the backend service:
+   ```bash
+   mvn spring-boot:run
+   ```
 ---
 
 ## 5. Features
@@ -104,6 +152,7 @@ krushak-sanyog-backend/
 │       └── java/
 ├── .gitignore
 ├── Dockerfile
+├── docker-compose.yml
 ├── pom.xml
 └── README.md
 ```
@@ -199,37 +248,14 @@ You can view the API structure and endpoints in the screenshots below:
 
 ---
 
-## 9. Local Development Setup
-
-### Requirements
-- Java 17+
-- Maven 3+
-- MySQL local or AWS RDS
-- AWS S3 Bucket
-
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/anurag-tarai/krushak-sanyog-backend
-   ```
-
-2. Configure environment variables
-
-3. Run the backend service:
-   ```bash
-   mvn spring-boot:run
-   ```
-
----
-
-## 10. Deployment Architecture
+## 9. Deployment Architecture
 
 > Diagram Placeholder  
 *Render (Backend) → AWS RDS → AWS S3 → Vercel (Frontend)*
 
 ---
 
-## 11. Security
+## 10. Security
 
 - JWT with HttpOnly cookies
 - Stateless authentication
@@ -239,7 +265,7 @@ You can view the API structure and endpoints in the screenshots below:
 
 ---
 
-## 12. Future Enhancements
+## 11. Future Enhancements
 
 - Farmer profiles
 - Farmer profile explore
@@ -248,7 +274,7 @@ You can view the API structure and endpoints in the screenshots below:
 
 ---
 
-## 13. License
+## 12. License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
